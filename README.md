@@ -37,7 +37,7 @@ The column names with 'f' indicated that a Fast Fourier Transform was applied to
 
 'XYZ' indicate the axial directions measured by the accelerometer and gyroscopes used with the experiment.
 
-Gyro: Readings from the Gyroscope
+Gyro: Readings from the Gyroscope,
 Acc: Readings from the Acceleromter
 
 Variable names, from the features_info.txt in the UCI Har Dataset:
