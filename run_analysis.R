@@ -1,5 +1,11 @@
 ##run_analysis.R
 
+##Checks to see if dplyr is installed
+ if(!(is.element("dplyr",installed.packages()[,1]))){
+    install.packages("dplyr")
+}
+library(dplyr)
+
 ##Reads in all the files from wd
 features <- read.table(paste(getwd(),"/UCI HAR Dataset/features.txt",sep=""))
 activity <- read.table(paste(getwd(),"/UCI HAR Dataset/activity_labels.txt",sep=""))
@@ -16,6 +22,10 @@ train_sub <- read.table(paste(getwd(),"/UCI HAR Dataset/train/subject_train.txt"
 ##Merges xtest and xtrain data, then names columns
 total <- rbind(xtest,xtrain)
 names(total) <- features$V2
+
+
+##Extracts columns containing 'mean' or 'std' in their names
+mean_std_dat <- total[,grep("mean|std",names(total))]
 
 
 ##Labels ytrain and ytest data based on activity names
@@ -35,11 +45,18 @@ namestotal <- rbind(test_sub,train_sub)
 names(namestotal) <- "Subject"
 
 
-##Adds Activity and Test subject columns to test and train data
-total$Activity <- ytotal
-total$Subject <- namestotal
+##Adds Activity and Test subject columns to mean and std data
+all_data <- cbind(namestotal, ytotal, mean_std_dat)
 
+##Converts all_data into a data frame tbl
+tbl_data <- tbl_df(all_data)
 
+##Takes the mean of each measurement and arranges it by Activity and Subject
+tidy <- group_by(tbl_data, Activity, Subject) %>% summarise_each(funs(mean))
 
-##Removes data from before the merge
-rm(xtest,ytest,xtrain,ytrain,test_sub,train_sub)
+write.table(tidy, file = "tidy.txt", row.name=FALSE)
+
+##Removes local data created during the script
+rm(xtest,ytest,xtrain,ytrain,test_sub,train_sub, 
+   mean_std_dat,ytotal,namestotal, total, activity, features
+  ,all_data,tbl_data,tidy)
