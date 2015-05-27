@@ -6,6 +6,16 @@
 }
 library(dplyr)
 
+##Optional code to check for, and install the files in the working directory
+##Uncomment to use
+ #if(!file.exists("./UCI HAR Dataset")){
+ #fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" 
+ #temp <- tempfile()
+ #download.file(fileUrl, temp)
+ #unzip(temp)
+ #unlink(temp)
+ #}
+ 
 ##Reads in all the files from wd
 features <- read.table(paste(getwd(),"/UCI HAR Dataset/features.txt",sep=""))
 activity <- read.table(paste(getwd(),"/UCI HAR Dataset/activity_labels.txt",sep=""))
