@@ -9,6 +9,8 @@ The data used in this assignment has been pulled from: https://d396qusza40orc.cl
 
 The script assumes you have unzipped the folder from the source above to your working directory to pull in the data, manipulate it, and create a "tidy.txt" of the summarized data.
 
+If you haven't downloaded the files, there is optional code to download and install the files to the active directory that is commented out by default.
+
 # How it works
 
 The first thing the script does is test if you have the package 'dplyr' installed, installs it for you if not, and then reads in the dplyr package for later.
